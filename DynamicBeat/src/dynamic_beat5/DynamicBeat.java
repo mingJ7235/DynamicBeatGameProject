@@ -19,22 +19,24 @@ public class DynamicBeat extends JFrame {
 	private Image screenImage;
 	private Graphics screenGraphic;
 
-	private Image introBackground = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
+	private ImageIcon exitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/exitButtonEntered.png"));
+	private ImageIcon exitButtonEnterdImage = new ImageIcon(Main.class.getResource("../images/exitButtonBasic.png"));
+	private ImageIcon startButtonBasicImage = new ImageIcon (Main.class.getResource("../images/startButtonBasic.png"));
+	private ImageIcon startButtonEnteredImage = new ImageIcon (Main.class.getResource("../images/startButtonEntered.png"));
+	private ImageIcon quitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/quitButtonBasic.png"));
+	private ImageIcon quitButtonEnteredImage = new ImageIcon(Main.class.getResource("../images/quitButtonEntered.png"));
+
+	private Image background = new ImageIcon(Main.class.getResource("../images/introBackground.jpg")).getImage();
 	private JLabel menuBar = new JLabel(new ImageIcon(Main.class.getResource("../images/menuBar.png")));
-	private ImageIcon exitButtonEnterdImage = new ImageIcon(Main.class.getResource("../images/exitButtonEntered.png"));
-	private ImageIcon startButtonImage = new ImageIcon (Main.class.getResource("../images/startButtonBasic.png"));
-	private ImageIcon quitButtonEnterdImage = new ImageIcon(Main.class.getResource("../images/exitButtonEntered.png"));
-	
-	private ImageIcon exitButtonBasicImage = new ImageIcon(Main.class.getResource("../images/exitButtonBasic.png"));
 	
 	private JButton exitButton = new JButton(exitButtonBasicImage);
-	private JButton startButton = new JButton(startButtonImage);
-	private JButton quitButton = new JButton(quitButtonEnterdImage);
+	private JButton startButton = new JButton(startButtonBasicImage);
+	private JButton quitButton = new JButton(quitButtonBasicImage);
 	
 	private int mouseX, mouseY;
 	
 	public DynamicBeat() {
-		//setUndecorated(true);
+		setUndecorated(true);
 		setTitle("Dynamic Beat");
 		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
 		setResizable(false);
@@ -43,8 +45,8 @@ public class DynamicBeat extends JFrame {
 		// 창을 끄면 프로그램이 종료되도록 함
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		//setBackground(new Color(0, 0, 0, 0));
-		//setLayout(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setLayout(null);
 		
 		exitButton.setBounds(1245, 0, 30, 30);
 		exitButton.setBorderPainted(false);
@@ -54,7 +56,7 @@ public class DynamicBeat extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				exitButton.setIcon(exitButtonEnterdImage);
 				exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				Music buttonEnteredMusic = new Music ("", false); //버튼 눌렀을때 노래넣기 (src)
+				Music buttonEnteredMusic = new Music ("buttonEnteredMusic.mp3", false); //버튼 눌렀을때 노래넣기 (src)
 				buttonEnteredMusic.start();
 			}
 			public void mouseExited(MouseEvent e) {
@@ -62,7 +64,7 @@ public class DynamicBeat extends JFrame {
 				exitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 			public void mousePressed(MouseEvent e) {
-				Music buttonEnteredMusic = new Music ("", false);
+				Music buttonEnteredMusic = new Music ("buttonPressedMusic.mp3", false);
 				buttonEnteredMusic.start();
 				try {
 					Thread.sleep(1000);
@@ -81,19 +83,21 @@ public class DynamicBeat extends JFrame {
 		startButton.setFocusPainted(false);
 		startButton.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				startButton.setIcon(startButtonImage);
+				startButton.setIcon(startButtonEnteredImage);
 				startButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				Music buttonEnteredMusic = new Music ("", false); //버튼 눌렀을때 노래넣기 (src)
+				Music buttonEnteredMusic = new Music ("buttonEnteredMusic.mp3", false); //버튼 눌렀을때 노래넣기 (src)
 				buttonEnteredMusic.start();
 			}
 			public void mouseExited(MouseEvent e) {
-				startButton.setIcon(startButtonImage);
+				startButton.setIcon(startButtonBasicImage);
 				startButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 			public void mousePressed(MouseEvent e) {
-				Music buttonEnteredMusic = new Music ("", false);
+				Music buttonEnteredMusic = new Music ("buttonPressedMusic.mp3", false);
 				buttonEnteredMusic.start();
-				//게임시작 이벤트
+				startButton.setVisible(false);
+				quitButton.setVisible(false);
+				background = new ImageIcon(Main.class.getResource("../images/mainBackground.jpg")).getImage();
 			}
 		});
 		add(startButton);
@@ -105,17 +109,17 @@ public class DynamicBeat extends JFrame {
 		quitButton.setFocusPainted(false);
 		quitButton.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				quitButton.setIcon(quitButtonEnterdImage);
+				quitButton.setIcon(quitButtonEnteredImage);
 				quitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				Music buttonEnteredMusic = new Music ("", false); //버튼 눌렀을때 노래넣기 (src)
+				Music buttonEnteredMusic = new Music ("buttonEnteredMusic.mp3", false); //버튼 눌렀을때 노래넣기 (src)
 				buttonEnteredMusic.start();
 			}
 			public void mouseExited(MouseEvent e) {
-				quitButton.setIcon(quitButtonEnterdImage);
+				quitButton.setIcon(quitButtonBasicImage);
 				quitButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 			public void mousePressed(MouseEvent e) {
-				Music buttonEnteredMusic = new Music ("", false);
+				Music buttonEnteredMusic = new Music ("buttonPressedMusic.mp3", false);
 				buttonEnteredMusic.start();
 				try {
 					Thread.sleep(1000);
@@ -163,8 +167,8 @@ public class DynamicBeat extends JFrame {
 
 	// repaint로 계속 이 프로그램이 돌아가면서 화면에 지속적으로 그려준다.
 	public void screenDraw(Graphics g) {
-		g.drawImage(introBackground, 0, 0, null);
-		//paintComponents(g);
+		g.drawImage(background, 0, 0, null);
+		paintComponents(g);
 		this.repaint();
 	}
 

@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/joshua/Desktop/JoshuaStudy/projects/DynamicBeat/JLayer1.0.1/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/CODING_(local)/04_Resources/JLayer1.0.1/jl1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
